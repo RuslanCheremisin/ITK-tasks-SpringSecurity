@@ -7,24 +7,21 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import rus.cheremisin.itktasksspringsecurity.mapper.UserMapper;
-import rus.cheremisin.itktasksspringsecurity.service.UserService;
+import rus.cheremisin.itktasksspringsecurity.repository.UserRepository;
 
 @Service
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    UserService userService;
-    private final UserMapper userMapper;
+    UserRepository userRepository;
 
     @Autowired
-    public UserDetailsServiceImpl(UserService userService, UserMapper userMapper) {
-        this.userService = userService;
-        this.userMapper = userMapper;
+    public UserDetailsServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userMapper.toEntity(userService.getUserByUsername(username));
+        return userRepository.getUserByUsername(username);
     }
 }
