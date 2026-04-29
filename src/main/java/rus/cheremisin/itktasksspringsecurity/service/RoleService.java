@@ -2,6 +2,7 @@ package rus.cheremisin.itktasksspringsecurity.service;
 
 import rus.cheremisin.itktasksspringsecurity.entity.Role;
 
+import java.util.Optional;
 import java.util.Set;
 
 public interface RoleService {

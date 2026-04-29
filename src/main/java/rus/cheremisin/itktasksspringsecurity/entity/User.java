@@ -58,17 +58,17 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        return List.copyOf(roles);
     }
 
     @Override
     public String getPassword() {
-        return "";
+        return password;
     }
 
     @Override
     public String getUsername() {
-        return "";
+        return username;
     }
 
     @Override

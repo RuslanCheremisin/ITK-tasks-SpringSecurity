@@ -1,6 +1,5 @@
 package rus.cheremisin.itktasksspringsecurity.config.security;
 
-import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,7 +21,9 @@ import java.util.Optional;
 @Component
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class JwtAuthenticationFilter extends OncePerRequestFilter {
+public class JwtAuthenticationFilter
+        extends OncePerRequestFilter
+{
     JWTUtils jwtUtils;
     UserDetailsServiceImpl userDetailsService;
 
@@ -32,26 +33,43 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             HttpServletResponse response,
             FilterChain filterChain) throws ServletException, IOException {
 
-        Optional<String> jwt = parseJwt(request);
-        if (jwt.isPresent()) {
-            String username = jwtUtils.extractUsername(jwt.get());
-            UserDetails user = userDetailsService.loadUserByUsername(username);
-            if (jwtUtils.isTokenValid(jwt.get(), user)) {
-                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-                UsernamePasswordAuthenticationToken authentication =
-                        new UsernamePasswordAuthenticationToken(
-                                userDetails,
-                                null,
-                                userDetails.getAuthorities()
-                        );
-                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                SecurityContextHolder.getContext().setAuthentication(authentication);
+        try {
+            Optional<String> jwt = parseJwt(request);
+            if (jwt.isPresent()) {
+                String username = jwtUtils.extractUsername(jwt.get());
+                UserDetails user = userDetailsService.loadUserByUsername(username);
+                if (jwtUtils.isTokenValid(jwt.get(), user)) {
+                    UsernamePasswordAuthenticationToken authentication =
+                            new UsernamePasswordAuthenticationToken(
+                                    user,
+                                    null,
+                                    user.getAuthorities()
+                            );
+                    authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                }
             }
-        } else {
-            throw new JwtException("JWT parsing failed! Check JWT");
+        } catch (Exception e) {
+            System.out.println("JWT ERROR: " + e.getMessage());
         }
 
         filterChain.doFilter(request, response);
+    }
+
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        String path = request.getServletPath();
+        return path.startsWith("/auth/");
+    }
+
+    @Override
+    protected boolean shouldNotFilterErrorDispatch() {
+        return true;
+    }
+
+    @Override
+    protected boolean shouldNotFilterAsyncDispatch() {
+        return true;
     }
 
     private Optional<String> parseJwt(HttpServletRequest request) {

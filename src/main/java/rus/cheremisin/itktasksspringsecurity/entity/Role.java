@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.security.core.GrantedAuthority;
 
-@Entity
+@Entity(name = "roles")
 @RequiredArgsConstructor
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)

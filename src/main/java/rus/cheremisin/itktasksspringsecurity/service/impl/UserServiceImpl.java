@@ -4,6 +4,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import rus.cheremisin.itktasksspringsecurity.DTO.UserCreateRequest;
@@ -25,6 +26,7 @@ public class UserServiceImpl implements UserService {
     UserRepository userRepository;
     UserMapper mapper;
     RoleService roleService;
+    PasswordEncoder encoder;
 
     @Override
     public UserDTO findById(Long id) {
@@ -34,7 +36,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO addUser(UserCreateRequest request) {
 
-        User user = null;
+        User user = userRepository.save(mapper.fromCreateRequestToEntity(request));
+        user.setPassword(encoder.encode(request.password()));
         user.addRole(roleService.getRoleByName("USER"));
         return mapper.toDto(userRepository.save(user));
     }

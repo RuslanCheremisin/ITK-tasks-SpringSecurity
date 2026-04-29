@@ -24,23 +24,29 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public AuthResponse authenticateAndGenerateTokens(AuthRequest request) {
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                request.username(),
-                request.password()
-        ));
-        UserDetails user = userDetailsService.loadUserByUsername(request.username());
-        String accessToken = jwtUtils.generateToken(user);
+        try {
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                    request.username(),
+                    request.password()
+            ));
+            System.out.println("AUTH SUCCESS");
+            UserDetails user = userDetailsService.loadUserByUsername(request.username());
+            String accessToken = jwtUtils.generateToken(user);
 
-        HashMap<String, Object> claims = new HashMap<>();
-        claims.put("tokenType", "refresh");
-        claims.put("userId", user.getUsername());
-        claims.put("roles", user.getAuthorities());
+            HashMap<String, Object> claims = new HashMap<>();
+            claims.put("tokenType", "refresh");
+            claims.put("userId", user.getUsername());
+            claims.put("roles", user.getAuthorities());
 
-        String refreshToken = jwtUtils.generateRefreshToken(
-                claims,
-                user
-        );
-        return new AuthResponse(accessToken, refreshToken);
-
+            String refreshToken = jwtUtils.generateRefreshToken(
+                    claims,
+                    user
+            );
+            return new AuthResponse(accessToken, refreshToken);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
     }
+
 }

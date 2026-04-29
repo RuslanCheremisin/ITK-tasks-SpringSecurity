@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -16,7 +16,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -24,26 +24,22 @@ import org.springframework.web.filter.OncePerRequestFilter;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class SecurityConfig {
     UserDetailsService userDetailsService;
-    AuthEntryPointJwt authEntryPointJwt;
     JwtAuthenticationFilter jwtAuthenticationFilter;
-
-    //
-//    private final LoggingFilter loggingFilter;
+//    LoggingFilter loggingFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 
         return httpSecurity
                 .csrf(csrf -> csrf.disable())
-                .exceptionHandling(exception ->
-                        exception.authenticationEntryPoint(authEntryPointJwt)
-                )
+
                 .authorizeHttpRequests(auth ->
-                        auth.requestMatchers("/auth/login").permitAll()
-                                .anyRequest().authenticated())
+                        auth.requestMatchers("/auth/**").permitAll()
+                                .anyRequest().authenticated()
+                )
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore(jwtAuthenticationFilter, OncePerRequestFilter.class)
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
 
     }
@@ -62,8 +58,10 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
+    public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
+        return http.getSharedObject(AuthenticationManagerBuilder.class)
+                .authenticationProvider(authenticationProvider())
+                .build();
     }
 
 }

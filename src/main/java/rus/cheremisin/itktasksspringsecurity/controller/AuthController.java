@@ -14,14 +14,18 @@ import rus.cheremisin.itktasksspringsecurity.DTO.AuthResponse;
 import rus.cheremisin.itktasksspringsecurity.service.AuthService;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("auth")
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class AuthController {
     AuthService authService;
 
     @PostMapping("/login")
-    public ResponseEntity<AuthResponse> login(@Valid @RequestBody AuthRequest request) {
-        return ResponseEntity.ok(authService.authenticateAndGenerateTokens(request));
+    public ResponseEntity<AuthResponse> login(
+            @Valid
+            @RequestBody AuthRequest request) {
+        AuthResponse response = authService.authenticateAndGenerateTokens(request);
+        System.out.println(response);
+        return ResponseEntity.ok(response);
     }
 }

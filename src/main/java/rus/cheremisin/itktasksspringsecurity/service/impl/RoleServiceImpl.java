@@ -1,24 +1,25 @@
 package rus.cheremisin.itktasksspringsecurity.service.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.persistence.EntityNotFoundException;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 import rus.cheremisin.itktasksspringsecurity.entity.Role;
 import rus.cheremisin.itktasksspringsecurity.repository.RoleRepository;
 import rus.cheremisin.itktasksspringsecurity.service.RoleService;
 
-
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class RoleServiceImpl implements RoleService {
 
-    private final RoleRepository roleRepository;
+    RoleRepository roleRepository;
 
-    @Autowired
-    public RoleServiceImpl(RoleRepository roleRepository) {
-        this.roleRepository = roleRepository;
-    }
     @Override
     public Set<Role> getAllRoles() {
         return new HashSet<>(roleRepository.findAll());
@@ -36,7 +37,11 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public Role getRoleByName(String name) {
-        return roleRepository.findRoleByName(name);
+        Optional<Role> roleOptional = roleRepository.findByName(name);
+        if (roleOptional.isEmpty()) {
+            throw new EntityNotFoundException("No role with name: " + name);
+        }
+        return roleOptional.get();
     }
 
 }
