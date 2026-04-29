@@ -44,6 +44,7 @@ public class User implements UserDetails {
     String username;
     String password;
 
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_roles",
@@ -55,6 +56,7 @@ public class User implements UserDetails {
 
     Timestamp createdAt;
     Timestamp updatedAt;
+    boolean isAccountLocked = true;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -77,11 +79,6 @@ public class User implements UserDetails {
     }
 
     @Override
-    public boolean isAccountNonLocked() {
-        return UserDetails.super.isAccountNonLocked();
-    }
-
-    @Override
     public boolean isCredentialsNonExpired() {
         return UserDetails.super.isCredentialsNonExpired();
     }
@@ -95,6 +92,10 @@ public class User implements UserDetails {
         if (!roles.contains(role)) {
             this.roles.add(role);
         }
+    }
+
+    public void setAccountAsLocked(boolean locked) {
+        isAccountLocked = locked;
     }
 
 

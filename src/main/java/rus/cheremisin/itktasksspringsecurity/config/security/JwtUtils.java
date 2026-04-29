@@ -1,7 +1,6 @@
 package rus.cheremisin.itktasksspringsecurity.config.security;
 
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -18,9 +17,8 @@ import java.util.function.Function;
 
 @Component
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class JWTUtils {
+public class JwtUtils {
 
-    // Время действия токена в миллисекундах (24 часа)
     @Value("${jwt.expiration.hour_in_ms}")
     long expirationTimeInMs;
     @Value("${jwt.expiration.hour_multiplier}")
@@ -28,18 +26,16 @@ public class JWTUtils {
     @Value("${jwt.secret}")
     String secreteString;
 
-    /*Метод для генерации JWT токена на основе данных пользователя*/
     public String generateToken(UserDetails userDetails) {
         return Jwts.builder()
                 .setSubject(userDetails.getUsername())
                 .claim("roles", userDetails.getAuthorities())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(getExpiration())
+//                .setExpiration(new Date(System.currentTimeMillis() + 60000)) // тестово, срок годности токена 1 минута
+                .setExpiration(new Date(System.currentTimeMillis() + expirationTimeInMs))
                 .signWith(getSignKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
-
-    // Метод для генерации токена обновления (refresh token) с дополнительными данными
 
     public String generateRefreshToken(HashMap<String, Object> claims, UserDetails userDetails) {
         return Jwts.builder()
@@ -79,10 +75,6 @@ public class JWTUtils {
 
 
     public boolean isTokenValid(String token, UserDetails userDetails) {
-        if (isTokenExpired(token)) {
-            throw new JwtException("Token is expired!");
-        }
-
         return extractClaims(token, claims -> {
             String tokenUsername = claims.getSubject();
             Date tokenExpiration = claims.getExpiration();
@@ -94,7 +86,7 @@ public class JWTUtils {
         });
     }
 
-    private boolean isTokenExpired(String token) {
+    public boolean isTokenExpired(String token) {
         return extractClaims(token, Claims::getExpiration).before(new Date());
     }
 }

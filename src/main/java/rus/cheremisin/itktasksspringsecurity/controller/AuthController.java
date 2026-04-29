@@ -25,7 +25,6 @@ public class AuthController {
             @Valid
             @RequestBody AuthRequest request) {
         AuthResponse response = authService.authenticateAndGenerateTokens(request);
-        System.out.println(response);
         return ResponseEntity.ok(response);
     }
 }

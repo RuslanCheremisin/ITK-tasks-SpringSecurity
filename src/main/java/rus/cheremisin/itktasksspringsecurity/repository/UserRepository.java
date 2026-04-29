@@ -1,10 +1,11 @@
 package rus.cheremisin.itktasksspringsecurity.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.security.core.userdetails.UserDetails;
-import rus.cheremisin.itktasksspringsecurity.DTO.UserDTO;
+import org.springframework.stereotype.Repository;
 import rus.cheremisin.itktasksspringsecurity.entity.User;
 
+@Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    UserDetails getUserByUsername(String username);
+    User getUserByUsername(String username);
+
 }

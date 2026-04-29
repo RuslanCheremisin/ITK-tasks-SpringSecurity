@@ -5,6 +5,8 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -23,6 +25,9 @@ import java.util.List;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequestMapping("/users")
+@EnableMethodSecurity(
+        securedEnabled = true,
+        jsr250Enabled = true)
 public class UserController {
     UserService userService;
 
@@ -32,21 +37,26 @@ public class UserController {
     }
 
     @GetMapping("/{user-id}")
+    @PostMapping
+    @PreAuthorize("hasRole('MODERATOR')")
     public ResponseEntity<UserDTO> getUserById(@PathVariable("user-id") Long userId) {
         return ResponseEntity.ok(userService.findById(userId));
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<UserDTO> createUser(@Valid @RequestBody UserCreateRequest request) {
         return ResponseEntity.ok(userService.addUser(request));
     }
 
     @PatchMapping("/{user-id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<UserDTO> patchUser(@PathVariable("user-id") Long userId, @RequestBody UserDTO dto) {
         return ResponseEntity.ok(userService.updateUser(userId, dto));
     }
 
     @DeleteMapping("/{user-id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteBand(@PathVariable("user-id") Long userId) {
         userService.deleteUser(userId);
         return ResponseEntity.noContent().build();
