@@ -3,6 +3,8 @@ package rus.cheremisin.itktasksspringsecurity.service.impl;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,13 +24,12 @@ public class AuthServiceImpl implements AuthService {
     AuthenticationManager authenticationManager;
     UserDetailsServiceImpl userDetailsService;
     JwtUtils jwtUtils;
-    PasswordEncoder passwordEncoder;
+    static Logger log = LoggerFactory.getLogger(AuthService.class);
 
     @Override
     public AuthResponse authenticateAndGenerateTokens(AuthRequest request) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 request.username(),
-//                passwordEncoder.encode(request.password())
                 request.password()
         ));
         UserDetails user = userDetailsService.loadUserByUsername(request.username());
@@ -42,6 +43,7 @@ public class AuthServiceImpl implements AuthService {
                 claims,
                 user
         );
+        log.info("SUCCESSFUL TOKEN GENERATION for user: {}", request.username());
         return new AuthResponse(accessToken, refreshToken);
     }
 

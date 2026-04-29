@@ -3,6 +3,8 @@ package rus.cheremisin.itktasksspringsecurity.config.security;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.event.EventListener;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.event.AuthenticationFailureBadCredentialsEvent;
@@ -12,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import rus.cheremisin.itktasksspringsecurity.entity.LoginAttemptInfo;
 import rus.cheremisin.itktasksspringsecurity.entity.User;
 import rus.cheremisin.itktasksspringsecurity.repository.UserRepository;
+import rus.cheremisin.itktasksspringsecurity.service.AuthService;
 import rus.cheremisin.itktasksspringsecurity.service.LoginAttemptInfoService;
 
 import javax.security.auth.login.AccountLockedException;
@@ -24,6 +27,7 @@ public class AuthEventListener {
 
     UserRepository userRepository;
     LoginAttemptInfoService loginAttemptInfoService;
+    static Logger log = LoggerFactory.getLogger(AuthEventListener.class);
 
 
     @EventListener
@@ -40,6 +44,7 @@ public class AuthEventListener {
             userRepository.save(user);
         }
         loginAttemptInfoService.save(info);
+        log.warn("FAILED_LOGIN user={}", username);
         throw new BadCredentialsException("Bad credentials!");
     }
 
@@ -56,7 +61,9 @@ public class AuthEventListener {
             userRepository.save(user);
             info.setAttempts(0);
             loginAttemptInfoService.save(info);
+            log.info("SUCCESS_LOGIN user={}", username);
         } else {
+            log.warn("ACCOUNT_LOCKED user={}", username);
             throw new AccountLockedException(username + " account is locked until " + lockUntil);
         }
     }

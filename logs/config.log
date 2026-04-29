@@ -1,0 +1,10 @@
+2026-04-30 01:35:37,696 INFO  rus.cheremisin.itktasksspringsecurity.config.security.AuthEventListener - SUCCESS_LOGIN user=johndoe123
+2026-04-30 01:36:01,434 WARN  rus.cheremisin.itktasksspringsecurity.config.security.AuthEventListener - FAILED_LOGIN user=johndoe123
+2026-04-30 01:36:10,533 WARN  rus.cheremisin.itktasksspringsecurity.config.security.AuthEventListener - FAILED_LOGIN user=johndoe123
+2026-04-30 01:36:11,944 WARN  rus.cheremisin.itktasksspringsecurity.config.security.AuthEventListener - FAILED_LOGIN user=johndoe123
+2026-04-30 01:36:13,272 WARN  rus.cheremisin.itktasksspringsecurity.config.security.AuthEventListener - FAILED_LOGIN user=johndoe123
+2026-04-30 01:36:14,558 WARN  rus.cheremisin.itktasksspringsecurity.config.security.AuthEventListener - FAILED_LOGIN user=johndoe123
+2026-04-30 01:36:15,887 WARN  rus.cheremisin.itktasksspringsecurity.config.security.AuthEventListener - FAILED_LOGIN user=johndoe123
+2026-04-30 01:36:17,367 WARN  rus.cheremisin.itktasksspringsecurity.config.security.AuthEventListener - FAILED_LOGIN user=johndoe123
+2026-04-30 01:36:20,406 WARN  rus.cheremisin.itktasksspringsecurity.config.security.AuthEventListener - FAILED_LOGIN user=johndoe123
+2026-04-30 01:36:31,865 WARN  rus.cheremisin.itktasksspringsecurity.config.security.AuthEventListener - ACCOUNT_LOCKED user=johndoe123
