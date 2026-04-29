@@ -1,7 +1,6 @@
 package rus.cheremisin.itktasksspringsecurity.config.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
@@ -21,7 +20,6 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import rus.cheremisin.itktasksspringsecurity.DTO.ErrorResponse;
-import rus.cheremisin.itktasksspringsecurity.service.AuthService;
 import rus.cheremisin.itktasksspringsecurity.service.impl.UserDetailsServiceImpl;
 
 import java.io.IOException;

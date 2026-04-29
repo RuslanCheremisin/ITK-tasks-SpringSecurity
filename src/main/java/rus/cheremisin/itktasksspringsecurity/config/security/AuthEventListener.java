@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import rus.cheremisin.itktasksspringsecurity.entity.LoginAttemptInfo;
 import rus.cheremisin.itktasksspringsecurity.entity.User;
 import rus.cheremisin.itktasksspringsecurity.repository.UserRepository;
-import rus.cheremisin.itktasksspringsecurity.service.AuthService;
 import rus.cheremisin.itktasksspringsecurity.service.LoginAttemptInfoService;
 
 import javax.security.auth.login.AccountLockedException;

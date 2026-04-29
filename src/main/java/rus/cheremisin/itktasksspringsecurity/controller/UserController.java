@@ -38,26 +38,26 @@ public class UserController {
 
     @GetMapping("/{user-id}")
     @PostMapping
-    @PreAuthorize("hasRole('MODERATOR')")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<UserDTO> getUserById(@PathVariable("user-id") Long userId) {
         return ResponseEntity.ok(userService.findById(userId));
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('MODERATOR')")
     public ResponseEntity<UserDTO> createUser(@Valid @RequestBody UserCreateRequest request) {
         return ResponseEntity.ok(userService.addUser(request));
     }
 
     @PatchMapping("/{user-id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('MODERATOR')")
     public ResponseEntity<UserDTO> patchUser(@PathVariable("user-id") Long userId, @RequestBody UserDTO dto) {
         return ResponseEntity.ok(userService.updateUser(userId, dto));
     }
 
     @DeleteMapping("/{user-id}")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> deleteBand(@PathVariable("user-id") Long userId) {
+    @PreAuthorize("hasRole('MODERATOR')")
+    public ResponseEntity<?> deleteUser(@PathVariable("user-id") Long userId) {
         userService.deleteUser(userId);
         return ResponseEntity.noContent().build();
     }

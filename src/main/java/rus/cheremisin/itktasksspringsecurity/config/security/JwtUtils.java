@@ -31,7 +31,6 @@ public class JwtUtils {
                 .setSubject(userDetails.getUsername())
                 .claim("roles", userDetails.getAuthorities())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-//                .setExpiration(new Date(System.currentTimeMillis() + 60000)) // тестово, срок годности токена 1 минута
                 .setExpiration(new Date(System.currentTimeMillis() + expirationTimeInMs))
                 .signWith(getSignKey(), SignatureAlgorithm.HS256)
                 .compact();

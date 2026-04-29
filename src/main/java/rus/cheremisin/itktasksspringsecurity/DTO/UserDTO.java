@@ -9,18 +9,14 @@ import java.util.Set;
 public record UserDTO(
         Long id,
         @NotNull
-        @NotBlank
-        String firstName,
+        @NotBlank String firstName,
         @NotNull
-        @NotBlank
-        String lastName,
+        @NotBlank String lastName,
         String phone,
         String bio,
         @NotNull
-        @NotBlank
-        String email,
+        @NotBlank String email,
         @NotNull
-        @NotBlank
-        String username,
+        @NotBlank String username,
         Set<Role> roles) {
 }
