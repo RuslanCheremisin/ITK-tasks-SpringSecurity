@@ -1,5 +1,6 @@
 package rus.cheremisin.itktasksspringsecurity.service.impl;
 
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -26,7 +27,7 @@ public class AuthServiceImpl implements AuthService {
     static Logger log = LoggerFactory.getLogger(AuthService.class);
 
     @Override
-    public AuthResponse authenticateAndGenerateTokens(AuthRequest request) {
+    public AuthResponse authenticateAndGenerateTokens(@Valid AuthRequest request) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 request.username(),
                 request.password()

@@ -43,8 +43,6 @@ public class User implements UserDetails {
     String bio;
 
     @NotNull @NotBlank
-    @Pattern(regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")
-    @NotNull @NotBlank
     @Pattern(regexp = "^[a-zA-Z0-9._]{3,20}$")
     String username;
     @NotNull @NotBlank
