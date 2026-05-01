@@ -8,7 +8,6 @@ public class ItkTasksSpringSecurityApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(ItkTasksSpringSecurityApplication.class, args);
-        System.out.println("hi");
     }
 
 }

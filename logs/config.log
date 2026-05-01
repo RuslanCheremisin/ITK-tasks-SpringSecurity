@@ -1,0 +1,18 @@
+2026-04-30 01:35:37,696 INFO  rus.cheremisin.itktasksspringsecurity.config.security.AuthEventListener - SUCCESS_LOGIN user=johndoe123
+2026-04-30 01:36:01,434 WARN  rus.cheremisin.itktasksspringsecurity.config.security.AuthEventListener - FAILED_LOGIN user=johndoe123
+2026-04-30 01:36:10,533 WARN  rus.cheremisin.itktasksspringsecurity.config.security.AuthEventListener - FAILED_LOGIN user=johndoe123
+2026-04-30 01:36:11,944 WARN  rus.cheremisin.itktasksspringsecurity.config.security.AuthEventListener - FAILED_LOGIN user=johndoe123
+2026-04-30 01:36:13,272 WARN  rus.cheremisin.itktasksspringsecurity.config.security.AuthEventListener - FAILED_LOGIN user=johndoe123
+2026-04-30 01:36:14,558 WARN  rus.cheremisin.itktasksspringsecurity.config.security.AuthEventListener - FAILED_LOGIN user=johndoe123
+2026-04-30 01:36:15,887 WARN  rus.cheremisin.itktasksspringsecurity.config.security.AuthEventListener - FAILED_LOGIN user=johndoe123
+2026-04-30 01:36:17,367 WARN  rus.cheremisin.itktasksspringsecurity.config.security.AuthEventListener - FAILED_LOGIN user=johndoe123
+2026-04-30 01:36:20,406 WARN  rus.cheremisin.itktasksspringsecurity.config.security.AuthEventListener - FAILED_LOGIN user=johndoe123
+2026-04-30 01:36:31,865 WARN  rus.cheremisin.itktasksspringsecurity.config.security.AuthEventListener - ACCOUNT_LOCKED user=johndoe123
+2026-04-30 01:52:38,706 WARN  rus.cheremisin.itktasksspringsecurity.config.security.JwtAuthenticationFilter - JWT_EXPIRED requestURI=/users/2, Authorization=Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huZG9lMTIzIiwicm9sZXMiOltdLCJpYXQiOjE3Nzc0Njg2ODIsImV4cCI6MTc3NzQ3MjI4Mn0.7W9rD1Bpe61W0aBsIi8KBpQEJ-bUeasFUdl99QEkCZU
+2026-04-30 01:53:11,900 WARN  rus.cheremisin.itktasksspringsecurity.config.security.JwtAuthenticationFilter - JWT_EXPIRED requestURI=/users/2, Authorization=Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huZG9lMTIzIiwicm9sZXMiOltdLCJpYXQiOjE3Nzc0Njg2ODIsImV4cCI6MTc3NzQ3MjI4Mn0.7W9rD1Bpe61W0aBsIi8KBpQEJ-bUeasFUdl99QEkCZU
+2026-04-30 01:53:28,450 WARN  rus.cheremisin.itktasksspringsecurity.config.security.JwtAuthenticationFilter - JWT_EXPIRED requestURI=/users/2, Authorization=Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huZG9lMTIzIiwicm9sZXMiOltdLCJpYXQiOjE3Nzc0Njg2ODIsImV4cCI6MTc3NzQ3MjI4Mn0.7W9rD1Bpe61W0aBsIi8KBpQEJ-bUeasFUdl99QEkCZU
+2026-04-30 01:54:05,782 WARN  rus.cheremisin.itktasksspringsecurity.config.security.AuthEventListener - ACCOUNT_LOCKED user=johndoe123
+2026-04-30 01:54:56,978 INFO  rus.cheremisin.itktasksspringsecurity.config.security.AuthEventListener - SUCCESS_LOGIN user=johndoe123
+2026-04-30 01:56:58,124 INFO  rus.cheremisin.itktasksspringsecurity.config.security.AuthEventListener - SUCCESS_LOGIN user=johndoe123
+2026-04-30 01:59:00,890 INFO  rus.cheremisin.itktasksspringsecurity.config.security.AuthEventListener - SUCCESS_LOGIN user=johndoe123
+2026-04-30 02:01:05,900 INFO  rus.cheremisin.itktasksspringsecurity.config.security.AuthEventListener - SUCCESS_LOGIN user=johndoe123
